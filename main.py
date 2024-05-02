@@ -1,22 +1,21 @@
 import Employee
+import getData
 
-Employee.add_employee("Martin", "Lutzkanov", "mlutzkan@gmail.com", "20-02-1992", "C4")
-Employee.add_employee("John", "Smith", "johnsmith@gmail.com", "20-04-1996", "C4")
-Employee.add_employee("Craig", "List", "craiglist@gmail.com", "18-02-1981", "C4")
-Employee.add_employee("John", "Cena", "ucantcme@wwe.com", "11-01-1992", "C4")
-Employee.add_employee("Birthday", "Boy 1", "happy@gmail.com", "22-04-1992", "C4")
-Employee.add_employee("Birthday", "Boy 2", "birthday@gmail.com", "10-05-1986", "C4")
 
-# Update the responsible persons pool
-Employee.get_upcoming_birthdays()
-Employee.update_responsible_persons_pool()
+guardians_list = getData.create_employees_from_xls(getData.guardians_file, 'Guardians', 'strypes.eu')
 
-# Print responsible persons pool
-print("Responsible Persons Pool:")
-for employee in Employee.responsible_persons_pool:
-    print(employee)
+guardians_upcoming_birthdays = Employee.get_upcoming_birthdays(guardians_list)
+guardians_pool = Employee.update_responsible_persons_pool(guardians_list)
 
 # Print upcoming birthdays
-print("\nUpcoming Birthdays:")
-for employee in Employee.upcoming_birthday_employees_list:
+print("Upcoming Birthdays:\n")
+for employee in guardians_upcoming_birthdays:
     employee.display_info()
+    print(f"Upcoming birthday: {employee.upcoming_birthday}")
+    print(f"Group created {employee.group_created}")
+
+
+# Print responsible persons pool
+print("\n\nResponsible Persons Pool:\n")
+for employee in guardians_pool:
+    print(employee)
