@@ -1,8 +1,11 @@
 import datetime
+import random
+import secrets
 
 
 class Employee:
-    def __init__(self, first_name, last_name, email, birthday, team, upcoming_birthday, group_created):
+    def __init__(self, first_name, last_name, email, birthday, team, upcoming_birthday, group_created, collector,
+                 backup_collector):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -10,6 +13,8 @@ class Employee:
         self.team = team
         self.upcoming_birthday = upcoming_birthday
         self.group_created = group_created
+        self.collector = collector
+        self.backup_collector = backup_collector
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -27,8 +32,9 @@ class Employee:
 
 
 # Function to add a new employee to the list.
-def add_employee(employee_list, first_name, last_name, email, birthday, team):
-    employee = Employee(first_name, last_name, email, birthday, team, upcoming_birthday=False, group_created=False)
+def add_employee(employee_list, first_name, last_name, email, birthday, team, collector):
+    employee = Employee(first_name, last_name, email, birthday, team, upcoming_birthday=False,
+                        group_created=False, collector=None, backup_collector=None)
     employee_list.append(employee)
 
 
@@ -59,3 +65,17 @@ def update_responsible_persons_pool(employee_list):
         if employee not in upcoming_birthdays:
             responsible_persons_pool.append(employee)
     return responsible_persons_pool
+
+
+def choose_money_collector(employee_list):
+    pool = update_responsible_persons_pool(employee_list)
+    for employee in employee_list:
+        first_choice = random.choice(pool)
+        employee.collector = first_choice
+        second_choice = random.choice(pool)
+        while second_choice == first_choice:
+            second_choice = random.choice(pool)
+        employee.backup_collector = second_choice
+
+
+

@@ -19,8 +19,8 @@ def create_employees_from_dicts(employees, team, email_ext):
         last_name = parts[-1]
         email = f"{first_name.lower()}.{last_name.lower()}@{email_ext}"  # Change domain as needed
         birthday = f"{day_dict[index]}-{month_dict[index]}"  # Assuming day comes first in the birthday format
-        employee = Employee.Employee(first_name, last_name, email, birthday, team,
-                                     upcoming_birthday=False, group_created=False)
+        employee = Employee.Employee(first_name, last_name, email, birthday, team, upcoming_birthday=False,
+                                     group_created=False, collector=None, backup_collector=None)
         employees_list.append(employee)
 
     return employees_list
